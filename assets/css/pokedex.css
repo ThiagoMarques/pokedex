@@ -84,6 +84,11 @@
     margin: .5rem;
     padding: 1rem;
     border-radius: 1rem;
+    cursor: pointer;
+}
+
+.pokemon-details {
+    /* display: none; */
 }
 
 .pokemon .number {
