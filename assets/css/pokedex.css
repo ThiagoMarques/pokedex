@@ -87,10 +87,6 @@
     cursor: pointer;
 }
 
-.pokemon-details {
-    /* display: none; */
-}
-
 .pokemon .number {
     color: #000;
     opacity: .3;

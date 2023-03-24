@@ -1,14 +1,101 @@
 const pokemonList = document.getElementById('pokemonList')
+const pokemonDiv = document.getElementById('pokemonDiv')
 const loadMoreButton = document.getElementById('loadMoreButton')
-
 
 const maxRecords = 151
 const limit = 10
 let offset = 0;
 
-function showDetails(pokemon) {
-    console.log('Vai mostrar detalhe de ', pokemon);
-    
+function hideList() {
+    pokemonDiv.hidden = false;
+    pokemonContainer.hidden = true;
+}
+
+function convertPokemonToDiv(pokemon) {
+    return `
+    <div id="pokemonSelected">
+    <div class="contentDetails-main ${pokemon.types[0].type.name}">
+    <div class="contentDetails">
+      <div class="contentDetails-button">
+        <button id="showListPokemon">Voltar</button>
+      </div>
+      <div class="contentDetails-box">
+        <div class="pokemonHeader">
+          <div class="pokemonHeader-text">
+            <h1>${pokemon.name}</h1>
+            <span>#${pokemon.id}</span>
+          </div>
+          <div class="pokemonHeader-badge">
+            <span id="badge">Badge</span>
+          </div>
+        </div>
+        <div class="pokemonImage">
+          <img
+            src="${pokemon.sprites.other.home.front_default}"
+            alt=""
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="contentDetails-info">
+    <div class="pokemonInfo">
+      <div class="pokemonInfo-about">
+        <div class="pokemonInfo-title">
+          <span>About</span>
+        </div>
+        <div class="infoDetails">
+          <div class="infoDetails-name">
+            <span>Species</span>
+          </div>
+          <div class="infoDetails-info">
+            <span>${pokemon.sprites.other.home.front_default}</span>
+          </div>
+        </div>
+        <div class="infoDetails">
+          <div class="infoDetails-name">
+            <span>Height</span>
+          </div>
+          <div class="infoDetails-info">
+            <span>Seed</span>
+          </div>
+        </div>
+        <div class="infoDetails">
+          <div class="infoDetails-name">
+            <span>Weight</span>
+          </div>
+          <div class="infoDetails-info">
+            <span>Seed</span>
+          </div>
+        </div>
+        <div class="infoDetails">
+          <div class="infoDetails-name">
+            <span>Abilities</span>
+          </div>
+          <div class="infoDetails-info">
+            <span>Seed</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pokemonInfo">
+      <div class="pokemonInfo-about">
+        <div class="pokemonInfo-title">
+          <span>Breeding</span>
+        </div>
+        <div class="infoDetails">
+          <div class="infoDetails-name">
+            <span>Egg Groups</span>
+          </div>
+          <div class="infoDetails-info">
+            <span>Monster</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    </div>
+    `
 }
 
 function convertPokemonToLi(pokemon) {
@@ -32,6 +119,7 @@ function convertPokemonToLi(pokemon) {
 function loadPokemonItens(offset, limit) {
     pokeApi.getPokemons(offset, limit).then((pokemons = []) => {
         const newHtml = pokemons.map(convertPokemonToLi).join('')
+
         pokemonList.innerHTML += newHtml
         
     }).then(() => {
@@ -39,11 +127,24 @@ function loadPokemonItens(offset, limit) {
         for(let index in elements) {
             if(index <= elements.length) {
                 elements[index].addEventListener('click', () => {
-                    console.log('OK', index)
-                    showDetails(elements[index])
+                    const findPokemon = [];
+                    findPokemon.push(cacheList[index])
+                    const newHtml = findPokemon.map(convertPokemonToDiv).join('')
+                    pokemonDiv.innerHTML += newHtml
+                    const showListButton = document.getElementById('showListPokemon')
+                    const pokemonContainer = document.getElementById('pokemonContainer')
+                    const pokemonDetailAdded = document.getElementById('pokemonSelected')
+                    showListButton.addEventListener('click', () => {
+                        pokemonDiv.removeChild(pokemonDetailAdded)
+                        pokemonContainer.hidden = false;
+                        pokemonDetails.hidden = true;
+ 
+                    })
+                    hideList()
                 })
             }
         }
+
     })
 }
 

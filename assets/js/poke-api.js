@@ -1,7 +1,9 @@
 
 const pokeApi = {}
+const cacheList = [];
 
 function convertPokeApiDetailToPokemon(pokeDetail) {
+    cacheList.push(pokeDetail)
     const pokemon = new Pokemon()
     pokemon.number = pokeDetail.id
     pokemon.name = pokeDetail.name
