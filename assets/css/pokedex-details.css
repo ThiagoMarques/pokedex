@@ -16,10 +16,9 @@
 #showListPokemon {
     background: transparent;
     color: #fff;
-    border: 1px solid #fff;
-    border-radius: 45%;
+    border: none;
     font-size: 0.875rem;
-    padding: 0.3rem 1.3rem;
+    padding: 0.5rem 1rem;
     cursor: pointer;
 }
 .contentDetails {
@@ -39,6 +38,21 @@
     width: 100%;
     justify-content: space-between;
     align-items: center;
+    text-transform: capitalize;
+}
+.pokemonHeader-text span{
+    font-size: 2rem;
+}
+.pokemonHeader-badge {
+    display: flex;
+    margin-bottom: 1.875rem;
+}
+.pokemonHeader-type {
+    padding: 0.5rem 1rem;
+    border: 1px solid #fff;
+    border-radius: 3rem;
+    opacity: 0.7;
+    margin-right: 0.5rem;
 }
 
 .pokemonImage {
@@ -70,7 +84,7 @@
 .pokemonInfo-about {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    margin: auto;
 }
 
 .pokemonInfo-title {
@@ -78,13 +92,16 @@
     font-size: 1.5rem;
     padding-bottom: 1.5rem;
     padding-top: 0.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 
 .infoDetails {
     display: flex;
     font-size: 1.125rem;
-    justify-content: center;
+    justify-content: space-between;
     padding-top: 0.3rem;
+    width: 100%;
 }
 .infoDetails-name {
     color: #636060;

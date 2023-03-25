@@ -14,7 +14,7 @@ function hideList() {
 function convertPokemonToDiv(pokemon) {
     return `
     <div id="pokemonSelected">
-    <div class="contentDetails-main ${pokemon.types[0].type.name}">
+    <div class="contentDetails-main ${pokemon.type}">
     <div class="contentDetails">
       <div class="contentDetails-button">
         <button id="showListPokemon">Voltar</button>
@@ -23,15 +23,15 @@ function convertPokemonToDiv(pokemon) {
         <div class="pokemonHeader">
           <div class="pokemonHeader-text">
             <h1>${pokemon.name}</h1>
-            <span>#${pokemon.id}</span>
+            <span>#${pokemon.number}</span>
           </div>
           <div class="pokemonHeader-badge">
-            <span id="badge">Badge</span>
+          ${pokemon.types.map((type) => `<span class="pokemonHeader-type ${type}">${type}</span>`).join('')}
           </div>
         </div>
         <div class="pokemonImage">
           <img
-            src="${pokemon.sprites.other.home.front_default}"
+            src="${pokemon.photo}"
             alt=""
           />
         </div>
@@ -46,18 +46,10 @@ function convertPokemonToDiv(pokemon) {
         </div>
         <div class="infoDetails">
           <div class="infoDetails-name">
-            <span>Species</span>
-          </div>
-          <div class="infoDetails-info">
-            <span>${pokemon.sprites.other.home.front_default}</span>
-          </div>
-        </div>
-        <div class="infoDetails">
-          <div class="infoDetails-name">
             <span>Height</span>
           </div>
           <div class="infoDetails-info">
-            <span>Seed</span>
+            <span>${pokemon.height}</span>
           </div>
         </div>
         <div class="infoDetails">
@@ -65,7 +57,7 @@ function convertPokemonToDiv(pokemon) {
             <span>Weight</span>
           </div>
           <div class="infoDetails-info">
-            <span>Seed</span>
+            <span>${pokemon.weight}</span>
           </div>
         </div>
         <div class="infoDetails">
@@ -73,22 +65,7 @@ function convertPokemonToDiv(pokemon) {
             <span>Abilities</span>
           </div>
           <div class="infoDetails-info">
-            <span>Seed</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="pokemonInfo">
-      <div class="pokemonInfo-about">
-        <div class="pokemonInfo-title">
-          <span>Breeding</span>
-        </div>
-        <div class="infoDetails">
-          <div class="infoDetails-name">
-            <span>Egg Groups</span>
-          </div>
-          <div class="infoDetails-info">
-            <span>Monster</span>
+            <span>${pokemon.abilities}</span>
           </div>
         </div>
       </div>

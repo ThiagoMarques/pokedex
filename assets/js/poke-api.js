@@ -3,10 +3,13 @@ const pokeApi = {}
 const cacheList = [];
 
 function convertPokeApiDetailToPokemon(pokeDetail) {
-    cacheList.push(pokeDetail)
+    console.log("🚀 ~ file: poke-api.js:6 ~ convertPokeApiDetailToPokemon ~ pokeDetail:", pokeDetail)
+    
     const pokemon = new Pokemon()
     pokemon.number = pokeDetail.id
     pokemon.name = pokeDetail.name
+    pokemon.height = pokeDetail.height
+    pokemon.weight = pokeDetail.weight
 
     const types = pokeDetail.types.map((typeSlot) => typeSlot.type.name)
     const [type] = types
@@ -14,8 +17,15 @@ function convertPokeApiDetailToPokemon(pokeDetail) {
     pokemon.types = types
     pokemon.type = type
 
-    pokemon.photo = pokeDetail.sprites.other.dream_world.front_default
+    
+    const abilities = pokeDetail.abilities.map((Abilities) => Abilities.ability.name)
+    const [abilitie] = abilities
 
+    pokemon.abilities = abilities
+    pokemon.abilitie = abilitie
+
+    pokemon.photo = pokeDetail.sprites.other.dream_world.front_default
+    cacheList.push(pokemon)
     return pokemon
 }
 
