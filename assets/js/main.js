@@ -5,7 +5,7 @@ const pokemonContainer = document.getElementById('pokemonContainer');
 
 
 const maxRecords = 151
-const limit = 10
+const limit = 16
 let offset = 0;
 
 let listApiPokemons = [];
@@ -105,10 +105,8 @@ function convertPokemonToLi(pokemon) {
 
 function loadPokemonItens(offset, limit) {
     pokeApi.getPokemons(offset, limit).then((pokemons = []) => {
-        listApiPokemons = pokemons;
-        console.log("🚀 ~ file: main.js:107 ~ pokeApi.getPokemons ~ listApiPokemons:", listApiPokemons)
+        listApiPokemons.push(...pokemons);
         const newHtml = pokemons.map(convertPokemonToLi).join('')
-
         pokemonList.innerHTML += newHtml
         
     }).then(() => {
@@ -116,7 +114,6 @@ function loadPokemonItens(offset, limit) {
         for(let index in elements) {
             if(index <= elements.length) {
                 elements[index].addEventListener('click', () => {
-                    
                     const elemSelected = document.getElementsByClassName('number');
                     const numberPokemon = +elemSelected[index].innerHTML.substring(1);
                     const pokemonSelected = listApiPokemons.filter((pokemon) => pokemon.number === numberPokemon);
