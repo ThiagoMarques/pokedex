@@ -3,8 +3,6 @@ const pokeApi = {}
 const cacheList = [];
 
 function convertPokeApiDetailToPokemon(pokeDetail) {
-    console.log("🚀 ~ file: poke-api.js:6 ~ convertPokeApiDetailToPokemon ~ pokeDetail:", pokeDetail)
-    
     const pokemon = new Pokemon()
     pokemon.number = pokeDetail.id
     pokemon.name = pokeDetail.name
@@ -25,7 +23,7 @@ function convertPokeApiDetailToPokemon(pokeDetail) {
     pokemon.abilitie = abilitie
 
     pokemon.photo = pokeDetail.sprites.other.dream_world.front_default
-    cacheList.push(pokemon)
+    cacheList.push(pokemon);
     return pokemon
 }
 

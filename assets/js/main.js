@@ -1,23 +1,27 @@
 const pokemonList = document.getElementById('pokemonList')
 const pokemonDiv = document.getElementById('pokemonDiv')
 const loadMoreButton = document.getElementById('loadMoreButton')
+const pokemonContainer = document.getElementById('pokemonContainer');
+
 
 const maxRecords = 151
 const limit = 10
 let offset = 0;
 
+let listApiPokemons = [];
+
 function hideList() {
-    pokemonDiv.hidden = false;
-    pokemonContainer.hidden = true;
+    pokemonDiv.hidden = !pokemonDiv.hidden;
+    pokemonContainer.hidden = !pokemonContainer.hidden;
 }
 
 function convertPokemonToDiv(pokemon) {
     return `
-    <div id="pokemonSelected">
+    <div class="pokemonSelected">
     <div class="contentDetails-main ${pokemon.type}">
     <div class="contentDetails">
       <div class="contentDetails-button">
-        <button id="showListPokemon">Voltar</button>
+        <button class="backButton">Voltar</button>
       </div>
       <div class="contentDetails-box">
         <div class="pokemonHeader">
@@ -75,6 +79,12 @@ function convertPokemonToDiv(pokemon) {
     `
 }
 
+function injectNewDiv() {
+  return `<section id="pokemonDiv" class="content" hidden="">
+      <!-- ..... Pokemons Details ..... -->
+    </section>`
+}
+
 function convertPokemonToLi(pokemon) {
     return `
         <li id="pokemon-item-${pokemon.number}" class="pokemon ${pokemon.type}">
@@ -95,6 +105,8 @@ function convertPokemonToLi(pokemon) {
 
 function loadPokemonItens(offset, limit) {
     pokeApi.getPokemons(offset, limit).then((pokemons = []) => {
+        listApiPokemons = pokemons;
+        console.log("🚀 ~ file: main.js:107 ~ pokeApi.getPokemons ~ listApiPokemons:", listApiPokemons)
         const newHtml = pokemons.map(convertPokemonToLi).join('')
 
         pokemonList.innerHTML += newHtml
@@ -104,20 +116,17 @@ function loadPokemonItens(offset, limit) {
         for(let index in elements) {
             if(index <= elements.length) {
                 elements[index].addEventListener('click', () => {
-                    const findPokemon = [];
-                    findPokemon.push(cacheList[index])
-                    const newHtml = findPokemon.map(convertPokemonToDiv).join('')
-                    pokemonDiv.innerHTML += newHtml
-                    const showListButton = document.getElementById('showListPokemon')
-                    const pokemonContainer = document.getElementById('pokemonContainer')
-                    const pokemonDetailAdded = document.getElementById('pokemonSelected')
-                    showListButton.addEventListener('click', () => {
-                        pokemonDiv.removeChild(pokemonDetailAdded)
-                        pokemonContainer.hidden = false;
-                        pokemonDetails.hidden = true;
- 
+                    
+                    const elemSelected = document.getElementsByClassName('number');
+                    const numberPokemon = +elemSelected[index].innerHTML.substring(1);
+                    const pokemonSelected = listApiPokemons.filter((pokemon) => pokemon.number === numberPokemon);
+                    const newHtmlDetail = pokemonSelected.map(convertPokemonToDiv).join('');
+                    pokemonDiv.innerHTML = newHtmlDetail
+                    hideList();
+                    const backButton = document.getElementsByClassName('backButton')[0];
+                    backButton.addEventListener('click', () => {
+                      hideList();
                     })
-                    hideList()
                 })
             }
         }
